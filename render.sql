@@ -1,4 +1,4 @@
-procedure render
+procedure render 
     ( p_item   in            apex_plugin.t_item
     , p_plugin in            apex_plugin.t_plugin
     , p_param  in            apex_plugin.t_item_render_param
