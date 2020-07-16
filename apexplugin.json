@@ -1,0 +1,32 @@
+{
+    "name" : "APEX Intl Phone Number Item",
+    "version" : "1.0",
+    "description" : "Use this plugin to generate QRCODE which will be stored in the collection or your custom table by writing a sql query",
+    "keywords" : ["DA", " COLLECTION","QRCODE", "SVG"],
+    "homepage" : "https://github.com/sdembele/apex_gen_qrcode_to_col-tab",
+    "bugs" : {
+      "url" : "https://github.com/sdembele/apex_gen_qrcode_to_col-tab/issues",
+      "email" : "dsouleman@gmail.com"
+    },
+    "license" : "MIT",
+    "author" : {
+      "name" : "Souleman DEMBELE",
+      "email" : "dsouleman@gmail.com"
+    },
+    "repository" : {
+      "type" : "git",
+      "url" : "https://github.com/sdembele/apex_gen_qrcode_to_col-tab"
+    },
+   "oracle" : {
+      "versions": ["11.2.0.1", "12.1.0.1", "12.2.0.1"],
+      "apex": {
+        "versions": ["20.1.0"],
+        "plugin" : {
+          "internalName" : "SD_APEX_GEN_QRCODE_COL_TAB",
+          "type" : "dynamic action",
+          "demo" : "https://apex.oracle.com/pls/apex/f?p=79291:6",
+          "previewImage" : "https://raw.githubusercontent.com/sdembele/apex_gen_qrcode_to_col-tab/master/apex_gen_qrcode_to_col-tab.png"
+        }
+      }
+    }
+  }

@@ -16,23 +16,7 @@ as
     l_false boolean := false;
     l_js_code varchar2(4000);
     l_attribute3 p_item.attribute_03%type := p_item.attribute_03; --autoPlaceholder
-    --attributes
-    /*l_attribute1 p_item.attribute_01%type := p_item.attribute_01; --allowDropdown
-    l_attribute2  p_item.attribute_02%type := p_item.attribute_02; --autoHideDialCode
-    l_attribute4  p_item.attribute_04%type := p_item.attribute_04; --customContainer
-    l_attribute5  p_item.attribute_05%type := p_item.attribute_05; --excludeCountries
-    l_attribute6  p_item.attribute_06%type := p_item.attribute_06; --formatOnDisplay
-    l_attribute7  p_item.attribute_07%type := p_item.attribute_07; --hiddenInput
-    l_attribute8  p_item.attribute_08%type := p_item.attribute_08; --initialCountry
-    l_attribute9  p_item.attribute_09%type := p_item.attribute_09; --geoIpLookup
-    l_attribute10 p_item.attribute_10%type := p_item.attribute_10; --localizedCountries
-    l_attribute11 p_item.attribute_11%type := p_item.attribute_11; --nationalMode
-    l_attribute12 p_item.attribute_12%type := p_item.attribute_12; --onlyCountries
-    l_attribute13 p_item.attribute_13%type := p_item.attribute_13; --placeholderNumberType
-    l_attribute14 p_item.attribute_14%type := p_item.attribute_14; --preferredCountries
-    l_attribute15 p_item.attribute_15%type := p_item.attribute_15; --separateDialCode
-    */
-    
+        
 begin
     --debug
     if apex_application.g_debug then
