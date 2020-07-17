@@ -38,8 +38,6 @@ begin
     p_css => '#'||p_item_label||' { padding-left: '||(case when p_item.attribute_15 = 'Y' then '87' else '52' end)||'px; }',
     p_key => 'padding_label_'||p_item_label );
     
-    
-    --initialize the plugin via JavaScript
     apex_json.initialize_clob_output;
     apex_json.open_object;
     if p_item.attribute_01 is not null then

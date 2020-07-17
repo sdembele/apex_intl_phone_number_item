@@ -1,8 +1,8 @@
 {
     "name" : "APEX Intl Phone Number Item",
     "version" : "1.0",
-    "description" : "Use this plugin to generate QRCODE which will be stored in the collection or your custom table by writing a sql query",
-    "keywords" : ["DA", " COLLECTION","QRCODE", "SVG"],
+    "description" : "Use this plugin to generate an item for phone number which detect automatically the country and show the corresponding flag",
+    "keywords" : ["ITEM", "PHONE","FLAG", "SVG"],
     "homepage" : "https://github.com/sdembele/apex_gen_qrcode_to_col-tab",
     "bugs" : {
       "url" : "https://github.com/sdembele/apex_gen_qrcode_to_col-tab/issues",
