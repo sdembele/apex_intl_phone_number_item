@@ -24,7 +24,7 @@
         "plugin" : {
           "internalName" : "SD_APEX_GEN_QRCODE_COL_TAB",
           "type" : "dynamic action",
-          "demo" : "https://apex.oracle.com/pls/apex/f?p=79291:6",
+          "demo" : "https://apex.oracle.com/pls/apex/sdembele/r/79291/intl-phone-number",
           "previewImage" : "https://raw.githubusercontent.com/sdembele/apex_gen_qrcode_to_col-tab/master/apex_gen_qrcode_to_col-tab.png"
         }
       }

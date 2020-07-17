@@ -8,7 +8,7 @@ It based on http://intl-tel-input.com works
 
 
 ## Demo and Examples
-You can view a live demo and some examples of how to use the various options here: http://intl-tel-input.com, or try it for yourself using the included demo.html.
+You can view a live demo and some examples of how to use the various options here: https://apex.oracle.com/pls/apex/sdembele/r/79291/intl-phone-number, or try it for yourself using the included demo.html.
 
 
 ## Features
