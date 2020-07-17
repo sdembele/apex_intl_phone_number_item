@@ -1,5 +1,5 @@
 # apex_intl_phone_number_item
-#### IMPORTANT: since v14 we have removed the jQuery dependency. See below for how to initialise and use the plugin with pure JavaScript. If you want to stick with the jQuery version, there is now a separate jQuery wrapped version.
+
 ---
 
 # International Phone Number Input
@@ -28,10 +28,10 @@ You can view a live demo and some examples of how to use the various options her
 
 3. Override the path to flags.png in your global page or specific page
   ```css
-  .iti__flag {background-image: url("path/to/flags.png");}
+  .iti__flag {background-image: url("#APP_IMAGES#flags.png");}
 
   @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
-    .iti__flag {background-image: url("path/to/flags@2x.png");}
+    .iti__flag {background-image: url("#APP_IMAGES#flags@2x.png");}
   }
   ```
   ## Tips
