@@ -3,9 +3,9 @@
     "version" : "1.0",
     "description" : "Use this plugin to generate an item for phone number which detect automatically the country and show the corresponding flag",
     "keywords" : ["ITEM", "PHONE","FLAG", "SVG"],
-    "homepage" : "https://github.com/sdembele/apex_gen_qrcode_to_col-tab",
+    "homepage" : "https://github.com/sdembele/apex_intl_phone_number_item",
     "bugs" : {
-      "url" : "https://github.com/sdembele/apex_gen_qrcode_to_col-tab/issues",
+      "url" : "https://github.com/sdembele/apex_intl_phone_number_item/issues",
       "email" : "dsouleman@gmail.com"
     },
     "license" : "MIT",
@@ -15,17 +15,17 @@
     },
     "repository" : {
       "type" : "git",
-      "url" : "https://github.com/sdembele/apex_gen_qrcode_to_col-tab"
+      "url" : "https://github.com/sdembele/apex_intl_phone_number_item"
     },
    "oracle" : {
       "versions": ["11.2.0.1", "12.1.0.1", "12.2.0.1"],
       "apex": {
         "versions": ["20.1.0"],
         "plugin" : {
-          "internalName" : "SD_APEX_GEN_QRCODE_COL_TAB",
-          "type" : "dynamic action",
+          "internalName" : "SD_INTL_PHONE_NUMBER",
+          "type" : "item",
           "demo" : "https://apex.oracle.com/pls/apex/sdembele/r/79291/intl-phone-number",
-          "previewImage" : "https://raw.githubusercontent.com/sdembele/apex_gen_qrcode_to_col-tab/master/apex_gen_qrcode_to_col-tab.png"
+          "previewImage" : "https://raw.githubusercontent.com/sdembele/apex_intl_phone_number_item/master/sc_intl_phone_number.png"
         }
       }
     }
