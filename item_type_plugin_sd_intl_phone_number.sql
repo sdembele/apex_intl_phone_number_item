@@ -28,7 +28,7 @@ prompt APPLICATION 557 - Mastermind
 -- Application Export:
 --   Application:     557
 --   Name:            Mastermind
---   Date and Time:   21:45 Saturday February 20, 2021
+--   Date and Time:   13:39 Sunday February 21, 2021
 --   Exported By:     JRIMBLAS
 --   Flashback:       0
 --   Export Type:     Component Export
@@ -58,7 +58,7 @@ wwv_flow_api.create_plugin(
 '#PLUGIN_FILES#intlTelInput.js'))
 ,p_css_file_urls=>'#PLUGIN_FILES#intlTelInput.css'
 ,p_plsql_code=>wwv_flow_string.join(wwv_flow_t_varchar2(
-'procedure intl_phone_number_render ',
+'procedure intl_phone_number_render',
 '    ( p_item   in            apex_plugin.t_item',
 '    , p_plugin in            apex_plugin.t_plugin',
 '    , p_param  in            apex_plugin.t_item_render_param',
@@ -73,8 +73,9 @@ wwv_flow_api.create_plugin(
 '    OC_CONTEXT          apex_exec.t_context; -- onlyCountries : attribute_12',
 '    PC_CONTEXT          apex_exec.t_context; -- prefferedCountries : attribute_14',
 '    l_js_code varchar2(4000);',
-'    l_attribute3 p_item.attribute_03%type := p_item.attribute_03; --autoPlaceholder',
-'    l_preferred_countries  p_item.attribute_01%type := nvl(p_item.attribute_14, p_plugin.attribute_01);',
+'    l_auto_placeholder        p_item.attribute_01%type := p_item.attribute_03;',
+'    l_preferred_countries     p_item.attribute_01%type := nvl(p_item.attribute_14, p_plugin.attribute_01);',
+'    l_separate_dial_code_flag p_item.attribute_01%type := p_item.attribute_15;',
 '    ',
 '    l_crlf              char(2) := chr(13)||chr(10);',
 '',
@@ -91,12 +92,12 @@ wwv_flow_api.create_plugin(
 '    ',
 '    p_item_label := p_item.name||''_LABEL'';',
 '    l_escaped_value := apex_escape.html(p_param.value);',
-'    htp.p(''<input id="''||p_item.name||''" name="''||l_item_name||''" type="tel" placeholder="''||p_item.placeholder||''" class="text_field text_field apex-item-text ''||p_item.element_css_classes||''" value="''||l_escaped_value||''" size="100%" />'');',
+'    htp.p(''<input id="''||p_item.name||''" name="''||l_item_name||''" type="tel" placeholder="''||p_item.placeholder||''" class="text_field text_field apex-item-text ''||p_item.element_css_classes||''" value="''||l_escaped_value||''" size="90%" />'');',
 '    ',
 '    ',
 '    ',
 '    apex_css.add (',
-'    p_css => ''#''||p_item_label||'' { padding-left: ''||(case when p_item.attribute_15 = ''Y'' then ''87'' else ''52'' end)||''px; }'',',
+'    p_css => ''#''||p_item_label||'' { padding-left: ''||(case when l_separate_dial_code_flag = ''Y'' then ''87'' else ''52'' end)||''px; }'',',
 '    p_key => ''padding_label_''||p_item_label );',
 '    ',
 '    ',
@@ -109,8 +110,8 @@ wwv_flow_api.create_plugin(
 '    if p_item.attribute_02 is not null then',
 '      apex_json.write(''autoHideDialCode'', (p_item.attribute_02 = ''Y''));',
 '    end if;',
-'    if p_item.attribute_03 is not null then',
-'      apex_json.write(''autoPlaceholder'', l_attribute3);',
+'    if l_auto_placeholder is not null then',
+'      apex_json.write(''autoPlaceholder'', l_auto_placeholder);',
 '    end if;',
 '    apex_json.write(''dropdownContainer'', ''document.body'');',
 '    if p_item.attribute_05 is not null then',
@@ -163,8 +164,8 @@ unistr('    apex_json.write(''sn'',''S\00E9n\00E9gal'');'),
 '      apex_json.close_array;',
 '    end if;',
 '',
-'    if p_item.attribute_15 is not null then',
-'      apex_json.write(''separateDialCode'',(p_item.attribute_15 = ''Y''));',
+'    if l_separate_dial_code_flag is not null then',
+'      apex_json.write(''separateDialCode'',(l_separate_dial_code_flag = ''Y''));',
 '    end if;',
 '    if p_item.attribute_08 is not null then',
 '      apex_json.write(''initialCountry'', p_item.attribute_08);',
@@ -195,8 +196,8 @@ unistr('    apex_json.write(''sn'',''S\00E9n\00E9gal'');'),
 '      || ''});'' || l_crlf',
 '    );',
 '',
-'',
-'end intl_phone_number_render;'))
+'end intl_phone_number_render;',
+''))
 ,p_api_version=>2
 ,p_render_function=>'intl_phone_number_render'
 ,p_standard_attributes=>'VISIBLE:FORM_ELEMENT:SESSION_STATE:QUICKPICK:SOURCE:ELEMENT:WIDTH:ELEMENT_OPTION:PLACEHOLDER:ICON'
@@ -220,9 +221,10 @@ wwv_flow_api.create_plugin_attribute(
 ,p_sql_max_column_count=>2
 ,p_is_translatable=>false
 ,p_examples=>wwv_flow_string.join(wwv_flow_t_varchar2(
-'select ISO_ALPHA2',
+'select iso_alpha2',
 '  from country_list',
 'where preferred_country_flag = ''Y'''))
+,p_help_text=>'Specify a SQL statement that returns one column called `iso_alpha2`.  You can override this setting per instance of the plugin also.'
 );
 wwv_flow_api.create_plugin_attribute(
  p_id=>wwv_flow_api.id(721515927058859165)
@@ -296,6 +298,7 @@ wwv_flow_api.create_plugin_attribute(
 ,p_is_required=>false
 ,p_default_value=>'Y'
 ,p_is_translatable=>false
+,p_help_text=>'Whether or not to allow the dropdown. If disabled, there is no dropdown arrow, and the selected flag is not clickable. Also we display the selected flag on the right instead because it is just a marker of state.'
 );
 wwv_flow_api.create_plugin_attribute(
  p_id=>wwv_flow_api.id(728206241704050077)
@@ -308,6 +311,7 @@ wwv_flow_api.create_plugin_attribute(
 ,p_is_required=>false
 ,p_default_value=>'Y'
 ,p_is_translatable=>false
+,p_help_text=>'If there is just a dial code in the input: remove it on blur or submit. This is to prevent just a dial code getting submitted with the form. Requires `nationalMode` to be set to false.'
 );
 wwv_flow_api.create_plugin_attribute(
  p_id=>wwv_flow_api.id(728207378509055682)
@@ -321,6 +325,10 @@ wwv_flow_api.create_plugin_attribute(
 ,p_default_value=>'polite'
 ,p_is_translatable=>false
 ,p_lov_type=>'STATIC'
+,p_help_text=>wwv_flow_string.join(wwv_flow_t_varchar2(
+'Set the input''s placeholder to an example number for the selected country, and update it if the country changes. You can specify the number type using the placeholderNumberType option. By default it is set to "polite", which means it will only set th'
+||'e placeholder if the input doesn''t already have one. You can also set it to "aggressive", which will replace any existing placeholder, or "off". <br>',
+'Requires the utilsScript option.'))
 );
 wwv_flow_api.create_plugin_attr_value(
  p_id=>wwv_flow_api.id(728208541795056811)
@@ -353,6 +361,7 @@ wwv_flow_api.create_plugin_attribute(
 ,p_attribute_type=>'TEXT'
 ,p_is_required=>false
 ,p_is_translatable=>false
+,p_help_text=>'Additional classes to add to the parent div.'
 );
 wwv_flow_api.create_plugin_attribute(
  p_id=>wwv_flow_api.id(728806152152809334)
@@ -364,6 +373,8 @@ wwv_flow_api.create_plugin_attribute(
 ,p_attribute_type=>'SQL'
 ,p_is_required=>false
 ,p_is_translatable=>false
+,p_examples=>'select iso_alpha2 from exclude_countries_tab'
+,p_help_text=>'In the dropdown, display all countries except the ones you specify here.'
 ,p_attribute_comment=>'select iso_alpha2 from countries'
 );
 wwv_flow_api.create_plugin_attribute(
@@ -377,6 +388,9 @@ wwv_flow_api.create_plugin_attribute(
 ,p_is_required=>false
 ,p_default_value=>'Y'
 ,p_is_translatable=>false
+,p_help_text=>wwv_flow_string.join(wwv_flow_t_varchar2(
+'Format the input value (according to the `nationalMode` option) during initialisation, and on `setNumber`. <br>',
+'Requires the utilsScript option.'))
 );
 wwv_flow_api.create_plugin_attribute(
  p_id=>wwv_flow_api.id(728214518339238606)
@@ -423,6 +437,11 @@ wwv_flow_api.create_plugin_attribute(
 ,p_is_required=>false
 ,p_default_value=>'N'
 ,p_is_translatable=>false
+,p_depending_on_attribute_id=>wwv_flow_api.id(728223011139258560)
+,p_depending_on_has_to_exist=>true
+,p_depending_on_condition_type=>'EQUALS'
+,p_depending_on_expression=>'N'
+,p_help_text=>'Display the country dial code next to the selected flag so it''s not part of the typed number. Note that this will disable `nationalMode` because technically we are dealing with international numbers, but with the dial code separated.'
 );
 wwv_flow_api.create_plugin_attribute(
  p_id=>wwv_flow_api.id(728809079833837012)
@@ -472,6 +491,8 @@ wwv_flow_api.create_plugin_attribute(
 ,p_attribute_type=>'SQL'
 ,p_is_required=>false
 ,p_is_translatable=>false
+,p_examples=>'select iso_alpha2 from preferred_countries_tab'
+,p_help_text=>'Specify a SQL statement that returns one column called `iso_alpha2`.  This SQL will override the plugin''s global "preferredCountries"'
 );
 wwv_flow_api.create_plugin_attribute(
  p_id=>wwv_flow_api.id(728223011139258560)
@@ -484,6 +505,7 @@ wwv_flow_api.create_plugin_attribute(
 ,p_is_required=>false
 ,p_default_value=>'N'
 ,p_is_translatable=>false
+,p_help_text=>'Display the country dial code next to the selected flag so it''s not part of the typed number. Note that this will disable `nationalMode` because technically we are dealing with international numbers, but with the dial code separated.'
 );
 end;
 /

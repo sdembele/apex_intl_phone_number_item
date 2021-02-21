@@ -1,4 +1,4 @@
-procedure intl_phone_number_render 
+procedure intl_phone_number_render
     ( p_item   in            apex_plugin.t_item
     , p_plugin in            apex_plugin.t_plugin
     , p_param  in            apex_plugin.t_item_render_param
@@ -13,8 +13,9 @@ as
     OC_CONTEXT          apex_exec.t_context; -- onlyCountries : attribute_12
     PC_CONTEXT          apex_exec.t_context; -- prefferedCountries : attribute_14
     l_js_code varchar2(4000);
-    l_attribute3 p_item.attribute_03%type := p_item.attribute_03; --autoPlaceholder
-    l_preferred_countries  p_item.attribute_01%type := nvl(p_item.attribute_14, p_plugin.attribute_01);
+    l_auto_placeholder        p_item.attribute_01%type := p_item.attribute_03;
+    l_preferred_countries     p_item.attribute_01%type := nvl(p_item.attribute_14, p_plugin.attribute_01);
+    l_separate_dial_code_flag p_item.attribute_01%type := p_item.attribute_15;
     
     l_crlf              char(2) := chr(13)||chr(10);
 
@@ -31,12 +32,12 @@ begin
     
     p_item_label := p_item.name||'_LABEL';
     l_escaped_value := apex_escape.html(p_param.value);
-    htp.p('<input id="'||p_item.name||'" name="'||l_item_name||'" type="tel" placeholder="'||p_item.placeholder||'" class="text_field text_field apex-item-text '||p_item.element_css_classes||'" value="'||l_escaped_value||'" size="100%" />');
+    htp.p('<input id="'||p_item.name||'" name="'||l_item_name||'" type="tel" placeholder="'||p_item.placeholder||'" class="text_field text_field apex-item-text '||p_item.element_css_classes||'" value="'||l_escaped_value||'" size="90%" />');
     
     
     
     apex_css.add (
-    p_css => '#'||p_item_label||' { padding-left: '||(case when p_item.attribute_15 = 'Y' then '87' else '52' end)||'px; }',
+    p_css => '#'||p_item_label||' { padding-left: '||(case when l_separate_dial_code_flag = 'Y' then '87' else '52' end)||'px; }',
     p_key => 'padding_label_'||p_item_label );
     
     
@@ -49,8 +50,8 @@ begin
     if p_item.attribute_02 is not null then
       apex_json.write('autoHideDialCode', (p_item.attribute_02 = 'Y'));
     end if;
-    if p_item.attribute_03 is not null then
-      apex_json.write('autoPlaceholder', l_attribute3);
+    if l_auto_placeholder is not null then
+      apex_json.write('autoPlaceholder', l_auto_placeholder);
     end if;
     apex_json.write('dropdownContainer', 'document.body');
     if p_item.attribute_05 is not null then
@@ -103,8 +104,8 @@ begin
       apex_json.close_array;
     end if;
 
-    if p_item.attribute_15 is not null then
-      apex_json.write('separateDialCode',(p_item.attribute_15 = 'Y'));
+    if l_separate_dial_code_flag is not null then
+      apex_json.write('separateDialCode',(l_separate_dial_code_flag = 'Y'));
     end if;
     if p_item.attribute_08 is not null then
       apex_json.write('initialCountry', p_item.attribute_08);
@@ -134,6 +135,5 @@ begin
       ||      apex_javascript.add_attribute('storageFormat', p_plugin.attribute_02, true, false) || l_crlf
       || '});' || l_crlf
     );
-
 
 end intl_phone_number_render;
