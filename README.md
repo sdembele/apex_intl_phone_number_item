@@ -28,7 +28,7 @@ You can view a live demo and some examples of how to use the various options her
 
 1. Download the plug-ig
 
-2. Download and upload to the Static Application Files the (flags.png)[flags.png] and (flags@2x.png)[flags@2x.png]
+2. Download and upload to the Static Application Files the [flags.png](flags.png) and [flags@2x.png](flags@2x.png)
 
 3. Override the path to flags.png in your global page or specific page
   ```css
