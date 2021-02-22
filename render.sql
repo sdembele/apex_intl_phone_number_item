@@ -14,6 +14,7 @@ as
     PC_CONTEXT          apex_exec.t_context; -- prefferedCountries : attribute_14
     l_js_code varchar2(4000);
     l_auto_placeholder        p_item.attribute_01%type := p_item.attribute_03;
+    l_geoIpLookup             p_item.attribute_01%type := nvl(p_item.attribute_09, p_plugin.attribute_03);
     l_preferred_countries     p_item.attribute_01%type := nvl(p_item.attribute_14, p_plugin.attribute_01);
     l_separate_dial_code_flag p_item.attribute_01%type := p_item.attribute_15;
     
@@ -110,20 +111,16 @@ begin
     if p_item.attribute_08 is not null then
       apex_json.write('initialCountry', p_item.attribute_08);
     end if;
-    apex_json.write('geoIpLookup','#geoIpLookup#');
+    apex_json.write('geoIpLookup', '#geoIpLookup#');
     apex_json.write('utilsScript',p_plugin.file_prefix||'utils.js');
     apex_json.close_object;
     l_js_code := apex_json.get_clob_output;
     apex_json.free_output;
     
     l_js_code := replace(l_js_code,'"document.body"','document.body');
-    l_js_code := replace(l_js_code,'"#geoIpLookup#"','function(callback) {
-         $.get("https://ipinfo.io", function() {}, "jsonp").always(function(resp) {
-           var countryCode = (resp && resp.country) ? resp.country : "";
-           callback(countryCode);
-         });
-       }');
-    
+
+    l_js_code := replace(l_js_code,'"#geoIpLookup#"',l_geoIpLookup); -- plug this JS code with no escaping
+   
     
     apex_debug.error('l_js_code === '||l_js_code);
     
@@ -137,3 +134,4 @@ begin
     );
 
 end intl_phone_number_render;
+/

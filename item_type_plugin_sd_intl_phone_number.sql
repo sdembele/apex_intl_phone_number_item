@@ -28,7 +28,7 @@ prompt APPLICATION 557 - Mastermind
 -- Application Export:
 --   Application:     557
 --   Name:            Mastermind
---   Date and Time:   13:39 Sunday February 21, 2021
+--   Date and Time:   12:54 Monday February 22, 2021
 --   Exported By:     JRIMBLAS
 --   Flashback:       0
 --   Export Type:     Component Export
@@ -74,6 +74,7 @@ wwv_flow_api.create_plugin(
 '    PC_CONTEXT          apex_exec.t_context; -- prefferedCountries : attribute_14',
 '    l_js_code varchar2(4000);',
 '    l_auto_placeholder        p_item.attribute_01%type := p_item.attribute_03;',
+'    l_geoIpLookup             p_item.attribute_01%type := nvl(p_item.attribute_09, p_plugin.attribute_03);',
 '    l_preferred_countries     p_item.attribute_01%type := nvl(p_item.attribute_14, p_plugin.attribute_01);',
 '    l_separate_dial_code_flag p_item.attribute_01%type := p_item.attribute_15;',
 '    ',
@@ -170,20 +171,16 @@ unistr('    apex_json.write(''sn'',''S\00E9n\00E9gal'');'),
 '    if p_item.attribute_08 is not null then',
 '      apex_json.write(''initialCountry'', p_item.attribute_08);',
 '    end if;',
-'    apex_json.write(''geoIpLookup'',''#geoIpLookup#'');',
+'    apex_json.write(''geoIpLookup'', ''#geoIpLookup#'');',
 '    apex_json.write(''utilsScript'',p_plugin.file_prefix||''utils.js'');',
 '    apex_json.close_object;',
 '    l_js_code := apex_json.get_clob_output;',
 '    apex_json.free_output;',
 '    ',
 '    l_js_code := replace(l_js_code,''"document.body"'',''document.body'');',
-'    l_js_code := replace(l_js_code,''"#geoIpLookup#"'',''function(callback) {',
-'         $.get("https://ipinfo.io", function() {}, "jsonp").always(function(resp) {',
-'           var countryCode = (resp && resp.country) ? resp.country : "";',
-'           callback(countryCode);',
-'         });',
-'       }'');',
-'    ',
+'',
+'    l_js_code := replace(l_js_code,''"#geoIpLookup#"'',l_geoIpLookup); -- plug this JS code with no escaping',
+'   ',
 '    ',
 '    apex_debug.error(''l_js_code === ''||l_js_code);',
 '    ',
@@ -286,6 +283,36 @@ wwv_flow_api.create_plugin_attr_value(
 ,p_help_text=>wwv_flow_string.join(wwv_flow_t_varchar2(
 'tel:+1-800-555-1212<br>',
 'A format perfect for phone links.'))
+);
+wwv_flow_api.create_plugin_attribute(
+ p_id=>wwv_flow_api.id(727110826377626015)
+,p_plugin_id=>wwv_flow_api.id(727704814646725645)
+,p_attribute_scope=>'APPLICATION'
+,p_attribute_sequence=>3
+,p_display_sequence=>30
+,p_prompt=>'geoIpLookup'
+,p_attribute_type=>'JAVASCRIPT'
+,p_is_required=>false
+,p_default_value=>wwv_flow_string.join(wwv_flow_t_varchar2(
+'function(callback) {',
+' $.get("https://ipinfo.io", function() {}, "jsonp").always(function(resp) {',
+'   var countryCode = (resp && resp.country) ? resp.country : "";',
+'   callback(countryCode);',
+' });',
+'}'))
+,p_is_translatable=>false
+,p_examples=>wwv_flow_string.join(wwv_flow_t_varchar2(
+'<pre><code>',
+'function(callback) {',
+' $.get("https://ipinfo.io", function() {}, "jsonp").always(function(resp) {',
+'   var countryCode = (resp && resp.country) ? resp.country : "";',
+'   callback(countryCode);',
+' });',
+'}',
+'</code></pre>'))
+,p_help_text=>wwv_flow_string.join(wwv_flow_t_varchar2(
+'When setting initialCountry to "auto", you must use this option to specify a custom function that looks up the user''s location, and then calls the success callback with the relevant country code.<br>',
+'Set to "undefined" if you don''t want a geoIpLookup function.'))
 );
 wwv_flow_api.create_plugin_attribute(
  p_id=>wwv_flow_api.id(728205077693045578)
@@ -403,17 +430,31 @@ wwv_flow_api.create_plugin_attribute(
 ,p_is_required=>false
 ,p_default_value=>'auto'
 ,p_is_translatable=>false
+,p_help_text=>'Set the initial country selection by specifying its country code. You can also set it to "auto", which will lookup the user''s country based on their IP address (requires the geoIpLookup option). Note that the "auto" option will not update the country'
+||' selection if the input already contains a number.'
 );
 wwv_flow_api.create_plugin_attribute(
- p_id=>wwv_flow_api.id(728215760803240932)
+ p_id=>wwv_flow_api.id(727108829548630817)
 ,p_plugin_id=>wwv_flow_api.id(727704814646725645)
 ,p_attribute_scope=>'COMPONENT'
 ,p_attribute_sequence=>9
 ,p_display_sequence=>90
 ,p_prompt=>'geoIpLookup'
-,p_attribute_type=>'TEXT'
+,p_attribute_type=>'JAVASCRIPT'
 ,p_is_required=>false
 ,p_is_translatable=>false
+,p_examples=>wwv_flow_string.join(wwv_flow_t_varchar2(
+'<code>',
+'function(callback) {',
+' $.get("https://ipinfo.io", function() {}, "jsonp").always(function(resp) {',
+'   var countryCode = (resp && resp.country) ? resp.country : "";',
+'   callback(countryCode);',
+' });',
+'}',
+'</code>'))
+,p_help_text=>wwv_flow_string.join(wwv_flow_t_varchar2(
+'This code overrides the Plugin''s Component attribute for geoIpLookup.',
+'When setting `initialCountry` to "auto", you must use this option to specify a custom function that looks up the user''s location, and then calls the success callback with the relevant country code. Leave empty t avoid the geoIpLookup.'))
 );
 wwv_flow_api.create_plugin_attribute(
  p_id=>wwv_flow_api.id(728217001315245528)
