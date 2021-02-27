@@ -85,8 +85,66 @@ $.widget( "ui.sdIntrlPhones", {
        //    return returnValue;
        // }
 
+       getValidationMessage: function() {
+         var message;
+         if (!!window[uiw._values.itiName].getNumber() && window[uiw._values.itiName].isValidNumber()) {
+           message = ""; // no error
+         }
+         else {
+           switch (window[uiw._values.itiName].getValidationError()) {
+             case 0:
+             message = ""; // no error
+             break;
+
+             case 1: 
+             message = "Invalid Country Code";
+             break;
+
+             case 2: 
+             message = "Too Short";
+             break;
+
+             case 3: 
+             message = "Too Long";
+             break;
+
+             default: 
+             message = "Invalid Number";
+             break;
+          }
+        }
+
+         return message;
+
+
+       },
+       getValidity: function() {
+         return {
+//           badInput: window[uiw._values.itiName].isValidNumber(),
+           customError: false,
+           patternMismatch: false,
+           rangeOverflow: false,
+           rangeUnderflow: false,
+           stepMismatch: false,
+           tooLong: false,
+           tooShort: false,
+           typeMismatch: false,
+           valid: !!window[uiw._values.itiName].getNumber()? window[uiw._values.itiName].isValidNumber(): true,
+           valueMissing: false
+          }
+       }
+
     });
 
+  },
+
+  isValidNumber: function() {
+    return window[uiw._values.itiName].isValidNumber();
+  },
+  
+  getValidationError: function() {
+    return window[uiw._values.itiName].getValidationError();
   }
+
 
 });
