@@ -3,15 +3,18 @@
 ---
 
 # International Phone Number Input
-Oracle APEX plug-in for entering and validating international telephone numbers. It adds a flag dropdown to any input, detects the user's country, displays a relevant placeholder and provides formatting/validation methods.
-It based on http://intl-tel-input.com works
+Oracle APEX plug-in for entering and validating international telephone numbers. It adds a dropdown with a country flag to any input, detects the user's country, displays a relevant placeholder and provides formatting/validation methods.
+
+It based on [intl-tel-input.com](http://intl-tel-input.com) and at the core it uses the [intl-tel-input](https://github.com/jackocnr/intl-tel-input) plugin.
 
 
 ## Demo and Examples
-You can view a live demo and some examples of how to use the various options here: https://apex.oracle.com/pls/apex/sdembele/r/79291/intl-phone-number, or try it for yourself using the included demo.html.
+
+You can view a live demo and some examples of how to use the various options here: https://apex.oracle.com/pls/apex/sdembele/r/79291/intl-phone-number
 
 
 ## Features
+
 * Automatically select the user's current country using an IP lookup
 * Automatically set the input placeholder to an example number for the selected country
 * Navigate the country dropdown by typing a country's name, or using up/down keys
@@ -22,9 +25,10 @@ You can view a live demo and some examples of how to use the various options her
 * Lots of initialisation options for customisation, as well as public methods for interaction
 
 ## Getting Started
+
 1. Download the plug-ig
 
-2. Download and upload to the Static Application Files the flags.png and flags@2x.png
+2. Download and upload to the Static Application Files the [flags.png](flags.png) and [flags@2x.png](flags@2x.png)
 
 3. Override the path to flags.png in your global page or specific page
   ```css
@@ -34,8 +38,12 @@ You can view a live demo and some examples of how to use the various options her
     .iti__flag {background-image: url("#APP_IMAGES#flags@2x.png");}
   }
   ```
-  ## Tips
-You can always get the full international number (including country code) using `getNumber`, then you only have to store that one string in your database (you don't have to store the country separately), and then the next time you initialise the plugin with that number it will automatically set the country and format it according to the options you specify (e.g. if you enable `nationalMode` it will automatically remove the international dial code for you).
+
+## Tips
+
+Select the "Storage Mode" you prefer in the Plugin Component Settings: E164, INTERNATIONAL, NATIONAL or RFC3966.
+
+For example, E164 & INTERNATIONAL will including country code as the internal value stored in your database (you don't have to store the country separately).  The plugin will automatically set the country and format it according to the options you specify (e.g. if you enable `nationalMode` it will automatically remove the international dial code for you).
 
 
 ## Plug-in Attributes

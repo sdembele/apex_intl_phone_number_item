@@ -1,6 +1,6 @@
 {
     "name" : "APEX Intl Phone Number Item",
-    "version" : "1.0",
+    "version" : "1.1",
     "description" : "Use this plugin to generate an item for phone number which detect automatically the country and show the corresponding flag",
     "keywords" : ["ITEM", "PHONE","FLAG", "SVG"],
     "homepage" : "https://github.com/sdembele/apex_intl_phone_number_item",
