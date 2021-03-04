@@ -6,6 +6,7 @@ $.widget( "ui.sdIntrlPhones", {
   options: {
      itemName: '',
      storageFormat: 1,
+     messages: null,
      suffix: '_iti'
   },
 
@@ -32,10 +33,12 @@ $.widget( "ui.sdIntrlPhones", {
     uiw.log("storageFormat", uiw.options.storageFormat);
 
     uiw._values = {
-        itiName:  uiw.options.itemName + uiw.options.suffix
+        itiName:  uiw.options.itemName + uiw.options.suffix,
+        messages: JSON.parse(uiw.options.messages)
     };
 
     uiw.log("itiName", uiw._values.itiName);
+    uiw.elog("messages", uiw._values.messages);
 
     // Init APEX pageitem functions
     uiw._initApexItem();
@@ -92,24 +95,33 @@ $.widget( "ui.sdIntrlPhones", {
          }
          else {
            switch (window[uiw._values.itiName].getValidationError()) {
-             case 0:
-             message = ""; // no error
+             case intlTelInputUtils.validationError.IS_POSSIBLE:
+             // sometimes we a is_possible combined with a !isValidNumber
+             message = window[uiw._values.itiName].isValidNumber()?"":uiw._values.messages.INVALID;
              break;
 
-             case 1: 
-             message = "Invalid Country Code";
+             case intlTelInputUtils.validationError.INVALID_COUNTRY_CODE: 
+             message = uiw._values.messages.INVALID_COUNTRY_CODE;
              break;
 
-             case 2: 
-             message = "Too Short";
+             case intlTelInputUtils.validationError.TOO_SHORT: 
+             message = uiw._values.messages.TOO_SHORT;
              break;
 
-             case 3: 
-             message = "Too Long";
+             case intlTelInputUtils.validationError.TOO_LONG: 
+             message = uiw._values.messages.TOO_LONG;
              break;
 
-             default: 
-             message = "Invalid Number";
+             case intlTelInputUtils.validationError.IS_POSSIBLE_LOCAL_ONLY:
+             message = uiw._values.messages.IS_POSSIBLE_LOCAL_ONLY; // almost not an error
+             break;
+
+             case intlTelInputUtils.validationError.INVALID_LENGTH: 
+             message = uiw._values.messages.INVALID_LENGTH;
+             break;
+
+             default:
+             message = uiw._values.messages.INVALID;
              break;
           }
         }

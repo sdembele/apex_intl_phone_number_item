@@ -17,6 +17,7 @@ as
     l_geoIpLookup             p_item.attribute_01%type := nvl(p_item.attribute_09, p_plugin.attribute_03);
     l_preferred_countries     p_item.attribute_01%type := nvl(p_item.attribute_14, p_plugin.attribute_01);
     l_separate_dial_code_flag p_item.attribute_01%type := p_item.attribute_15;
+    l_messages                p_item.attribute_01%type := p_plugin.attribute_04; -- for MLS messages
     
     l_crlf              char(2) := chr(13)||chr(10);
 
@@ -30,7 +31,7 @@ begin
             );
     end if;
     
-    
+    logger.log('messages' || l_messages, 'intl_phone_number_render');
     p_item_label := p_item.name||'_LABEL';
     l_escaped_value := apex_escape.html(p_param.value);
     htp.p('<input id="'||p_item.name||'" name="'||l_item_name||'" type="tel" placeholder="'||p_item.placeholder||'" class="text_field text_field apex-item-text '||p_item.element_css_classes||'" value="'||l_escaped_value||'" size="90%" />');
@@ -129,7 +130,8 @@ begin
       || p_item.name||'_iti = window.intlTelInput(input,'|| l_js_code || ');' || l_crlf
       || '$("#'|| p_item.name || '").sdIntrlPhones({' || l_crlf
       ||      apex_javascript.add_attribute('itemName', p_item.name, true, true) || l_crlf
-      ||      apex_javascript.add_attribute('storageFormat', p_plugin.attribute_02, true, false) || l_crlf
+      ||      apex_javascript.add_attribute('storageFormat', p_plugin.attribute_02, true, true) || l_crlf
+      ||      apex_javascript.add_attribute('messages', l_messages, false, false) || l_crlf
       || '});' || l_crlf
     );
 
