@@ -31,7 +31,6 @@ begin
             );
     end if;
     
-    logger.log('messages' || l_messages, 'intl_phone_number_render');
     p_item_label := p_item.name||'_LABEL';
     l_escaped_value := apex_escape.html(p_param.value);
     htp.p('<input id="'||p_item.name||'" name="'||l_item_name||'" type="tel" placeholder="'||p_item.placeholder||'" class="text_field text_field apex-item-text '||p_item.element_css_classes||'" value="'||l_escaped_value||'" size="90%" />');
