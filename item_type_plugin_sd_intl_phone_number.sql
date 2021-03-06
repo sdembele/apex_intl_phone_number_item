@@ -15,9 +15,9 @@ begin
 wwv_flow_api.import_begin (
  p_version_yyyy_mm_dd=>'2020.03.31'
 ,p_release=>'20.1.0.00.13'
-,p_default_workspace_id=>67868874793045791
+,p_default_workspace_id=>6813076879370563
 ,p_default_application_id=>557
-,p_default_id_offset=>0
+,p_default_id_offset=>786801409553178752
 ,p_default_owner=>'SAPIEN_APEX'
 );
 end;
@@ -28,12 +28,12 @@ prompt APPLICATION 557 - Mastermind
 -- Application Export:
 --   Application:     557
 --   Name:            Mastermind
---   Date and Time:   09:08 Friday March 5, 2021
+--   Date and Time:   09:57 Saturday March 6, 2021
 --   Exported By:     JRIMBLAS
 --   Flashback:       0
 --   Export Type:     Component Export
 --   Manifest
---     PLUGIN: 727704814646725645
+--     PLUGIN: 1514506224199904397
 --   Manifest End
 --   Version:         20.1.0.00.13
 --   Instance ID:     218267255189071
@@ -47,15 +47,16 @@ end;
 prompt --application/shared_components/plugins/item_type/sd_intl_phone_number
 begin
 wwv_flow_api.create_plugin(
- p_id=>wwv_flow_api.id(727704814646725645)
+ p_id=>wwv_flow_api.id(1514506224199904397)
 ,p_plugin_type=>'ITEM TYPE'
 ,p_name=>'SD_INTL_PHONE_NUMBER'
 ,p_display_name=>'Intl Phone Number'
 ,p_supported_ui_types=>'DESKTOP:JQM_SMARTPHONE'
 ,p_supported_component_types=>'APEX_APPLICATION_PAGE_ITEMS:APEX_APPL_PAGE_IG_COLUMNS'
 ,p_javascript_file_urls=>wwv_flow_string.join(wwv_flow_t_varchar2(
+'#PLUGIN_FILES#intlTelInput.js',
 '#PLUGIN_FILES#sdIntlPhones#MIN#.js',
-'#PLUGIN_FILES#intlTelInput.js'))
+''))
 ,p_css_file_urls=>'#PLUGIN_FILES#intlTelInput.css'
 ,p_plsql_code=>wwv_flow_string.join(wwv_flow_t_varchar2(
 'procedure intl_phone_number_render',
@@ -187,12 +188,15 @@ unistr('    apex_json.write(''sn'',''S\00E9n\00E9gal'');'),
 '    apex_javascript.add_onload_code(p_code => ',
 '         ''var input = document.getElementById("''||p_item.name||''");'' || l_crlf',
 '      || p_item.name||''_iti = window.intlTelInput(input,''|| l_js_code || '');'' || l_crlf',
+'      || p_item.name||''_iti.promise.then(function(){'' || l_crlf  -- wait for the iti item to be set before setting up the APEX item',
 '      || ''$("#''|| p_item.name || ''").sdIntrlPhones({'' || l_crlf',
 '      ||      apex_javascript.add_attribute(''itemName'', p_item.name, true, true) || l_crlf',
 '      ||      apex_javascript.add_attribute(''storageFormat'', p_plugin.attribute_02, true, true) || l_crlf',
 '      ||      apex_javascript.add_attribute(''messages'', l_messages, false, false) || l_crlf',
 '      || ''});'' || l_crlf',
+'      || ''});'' -- close iti.promise',
 '    );',
+'',
 '',
 'end intl_phone_number_render;',
 ''))
@@ -201,14 +205,14 @@ unistr('    apex_json.write(''sn'',''S\00E9n\00E9gal'');'),
 ,p_standard_attributes=>'VISIBLE:FORM_ELEMENT:SESSION_STATE:QUICKPICK:SOURCE:ELEMENT:WIDTH:ELEMENT_OPTION:PLACEHOLDER:ICON'
 ,p_substitute_attributes=>true
 ,p_subscribe_plugin_settings=>true
-,p_version_identifier=>'1.1.1'
+,p_version_identifier=>'1.1.2'
 ,p_about_url=>'https://github.com/sdembele/apex_intl_phone_number_item'
 ,p_plugin_comment=>'Build with love by Souleman DEMBELE sponsored by <a href="https://sitechgroupe.com">SITECH</a>'
 ,p_files_version=>131
 );
 wwv_flow_api.create_plugin_attribute(
- p_id=>wwv_flow_api.id(718001542367282822)
-,p_plugin_id=>wwv_flow_api.id(727704814646725645)
+ p_id=>wwv_flow_api.id(1504802951920461574)
+,p_plugin_id=>wwv_flow_api.id(1514506224199904397)
 ,p_attribute_scope=>'APPLICATION'
 ,p_attribute_sequence=>1
 ,p_display_sequence=>10
@@ -225,8 +229,8 @@ wwv_flow_api.create_plugin_attribute(
 ,p_help_text=>'Specify a SQL statement that returns one column called `iso_alpha2`.  You can override this setting per instance of the plugin also.'
 );
 wwv_flow_api.create_plugin_attribute(
- p_id=>wwv_flow_api.id(721515927058859165)
-,p_plugin_id=>wwv_flow_api.id(727704814646725645)
+ p_id=>wwv_flow_api.id(1508317336612037917)
+,p_plugin_id=>wwv_flow_api.id(1514506224199904397)
 ,p_attribute_scope=>'APPLICATION'
 ,p_attribute_sequence=>2
 ,p_display_sequence=>20
@@ -246,8 +250,8 @@ wwv_flow_api.create_plugin_attribute(
 '</ul>'))
 );
 wwv_flow_api.create_plugin_attr_value(
- p_id=>wwv_flow_api.id(721517935947855929)
-,p_plugin_attribute_id=>wwv_flow_api.id(721515927058859165)
+ p_id=>wwv_flow_api.id(1508319345501034681)
+,p_plugin_attribute_id=>wwv_flow_api.id(1508317336612037917)
 ,p_display_sequence=>10
 ,p_display_value=>'E164'
 ,p_return_value=>'E164'
@@ -256,8 +260,8 @@ wwv_flow_api.create_plugin_attr_value(
 '+18005551212'))
 );
 wwv_flow_api.create_plugin_attr_value(
- p_id=>wwv_flow_api.id(721518306045854248)
-,p_plugin_attribute_id=>wwv_flow_api.id(721515927058859165)
+ p_id=>wwv_flow_api.id(1508319715599033000)
+,p_plugin_attribute_id=>wwv_flow_api.id(1508317336612037917)
 ,p_display_sequence=>20
 ,p_display_value=>'INTERNATIONAL'
 ,p_return_value=>'INTERNATIONAL'
@@ -266,8 +270,8 @@ wwv_flow_api.create_plugin_attr_value(
 'Country Code, space, phone separated by dashes.'))
 );
 wwv_flow_api.create_plugin_attr_value(
- p_id=>wwv_flow_api.id(721518796435853136)
-,p_plugin_attribute_id=>wwv_flow_api.id(721515927058859165)
+ p_id=>wwv_flow_api.id(1508320205989031888)
+,p_plugin_attribute_id=>wwv_flow_api.id(1508317336612037917)
 ,p_display_sequence=>30
 ,p_display_value=>'NATIONAL'
 ,p_return_value=>'NATIONAL'
@@ -276,8 +280,8 @@ wwv_flow_api.create_plugin_attr_value(
 'A more friendly representation based on the country.'))
 );
 wwv_flow_api.create_plugin_attr_value(
- p_id=>wwv_flow_api.id(721519104629850884)
-,p_plugin_attribute_id=>wwv_flow_api.id(721515927058859165)
+ p_id=>wwv_flow_api.id(1508320514183029636)
+,p_plugin_attribute_id=>wwv_flow_api.id(1508317336612037917)
 ,p_display_sequence=>40
 ,p_display_value=>'RFC3966'
 ,p_return_value=>'RFC3966'
@@ -286,8 +290,8 @@ wwv_flow_api.create_plugin_attr_value(
 'A format perfect for phone links.'))
 );
 wwv_flow_api.create_plugin_attribute(
- p_id=>wwv_flow_api.id(727110826377626015)
-,p_plugin_id=>wwv_flow_api.id(727704814646725645)
+ p_id=>wwv_flow_api.id(1513912235930804767)
+,p_plugin_id=>wwv_flow_api.id(1514506224199904397)
 ,p_attribute_scope=>'APPLICATION'
 ,p_attribute_sequence=>3
 ,p_display_sequence=>30
@@ -310,14 +314,27 @@ wwv_flow_api.create_plugin_attribute(
 '   callback(countryCode);',
 ' });',
 '}',
+'</code></pre>',
+'or for now geoIP Lookup',
+'',
+'<pre><code>',
+'function(callback) {',
+'   callback("");',
+'}',
 '</code></pre>'))
 ,p_help_text=>wwv_flow_string.join(wwv_flow_t_varchar2(
 'When setting initialCountry to "auto", you must use this option to specify a custom function that looks up the user''s location, and then calls the success callback with the relevant country code.<br>',
-'<b>IMPORTANT:</b> Set to "undefined" if you don''t want a geoIpLookup function.'))
+'<b>IMPORTANT:</b> You must specify a function for the callback, if you don''t want a geoIpLookup function use something like this:',
+'',
+'<pre><code>',
+'function(callback) {',
+'   callback("");',
+'}',
+'</code></pre>'))
 );
 wwv_flow_api.create_plugin_attribute(
- p_id=>wwv_flow_api.id(777201573600113006)
-,p_plugin_id=>wwv_flow_api.id(727704814646725645)
+ p_id=>wwv_flow_api.id(1564002983153291758)
+,p_plugin_id=>wwv_flow_api.id(1514506224199904397)
 ,p_attribute_scope=>'APPLICATION'
 ,p_attribute_sequence=>4
 ,p_display_sequence=>40
@@ -350,8 +367,8 @@ wwv_flow_api.create_plugin_attribute(
 'Translate the messages (values), but not the keys (in upper case).'))
 );
 wwv_flow_api.create_plugin_attribute(
- p_id=>wwv_flow_api.id(728205077693045578)
-,p_plugin_id=>wwv_flow_api.id(727704814646725645)
+ p_id=>wwv_flow_api.id(1515006487246224330)
+,p_plugin_id=>wwv_flow_api.id(1514506224199904397)
 ,p_attribute_scope=>'COMPONENT'
 ,p_attribute_sequence=>1
 ,p_display_sequence=>10
@@ -363,8 +380,8 @@ wwv_flow_api.create_plugin_attribute(
 ,p_help_text=>'Whether or not to allow the dropdown. If disabled, there is no dropdown arrow, and the selected flag is not clickable. Also we display the selected flag on the right instead because it is just a marker of state.'
 );
 wwv_flow_api.create_plugin_attribute(
- p_id=>wwv_flow_api.id(728206241704050077)
-,p_plugin_id=>wwv_flow_api.id(727704814646725645)
+ p_id=>wwv_flow_api.id(1515007651257228829)
+,p_plugin_id=>wwv_flow_api.id(1514506224199904397)
 ,p_attribute_scope=>'COMPONENT'
 ,p_attribute_sequence=>2
 ,p_display_sequence=>20
@@ -376,8 +393,8 @@ wwv_flow_api.create_plugin_attribute(
 ,p_help_text=>'If there is just a dial code in the input: remove it on blur or submit. This is to prevent just a dial code getting submitted with the form. Requires `nationalMode` to be set to false.'
 );
 wwv_flow_api.create_plugin_attribute(
- p_id=>wwv_flow_api.id(728207378509055682)
-,p_plugin_id=>wwv_flow_api.id(727704814646725645)
+ p_id=>wwv_flow_api.id(1515008788062234434)
+,p_plugin_id=>wwv_flow_api.id(1514506224199904397)
 ,p_attribute_scope=>'COMPONENT'
 ,p_attribute_sequence=>3
 ,p_display_sequence=>30
@@ -393,29 +410,29 @@ wwv_flow_api.create_plugin_attribute(
 'Requires the utilsScript option.'))
 );
 wwv_flow_api.create_plugin_attr_value(
- p_id=>wwv_flow_api.id(728208541795056811)
-,p_plugin_attribute_id=>wwv_flow_api.id(728207378509055682)
+ p_id=>wwv_flow_api.id(1515009951348235563)
+,p_plugin_attribute_id=>wwv_flow_api.id(1515008788062234434)
 ,p_display_sequence=>10
 ,p_display_value=>'polite'
 ,p_return_value=>'polite'
 );
 wwv_flow_api.create_plugin_attr_value(
- p_id=>wwv_flow_api.id(728208956660058954)
-,p_plugin_attribute_id=>wwv_flow_api.id(728207378509055682)
+ p_id=>wwv_flow_api.id(1515010366213237706)
+,p_plugin_attribute_id=>wwv_flow_api.id(1515008788062234434)
 ,p_display_sequence=>20
 ,p_display_value=>'aggressive'
 ,p_return_value=>'aggressive'
 );
 wwv_flow_api.create_plugin_attr_value(
- p_id=>wwv_flow_api.id(728209409660059993)
-,p_plugin_attribute_id=>wwv_flow_api.id(728207378509055682)
+ p_id=>wwv_flow_api.id(1515010819213238745)
+,p_plugin_attribute_id=>wwv_flow_api.id(1515008788062234434)
 ,p_display_sequence=>30
 ,p_display_value=>'off'
 ,p_return_value=>'off'
 );
 wwv_flow_api.create_plugin_attribute(
- p_id=>wwv_flow_api.id(728209758416067821)
-,p_plugin_id=>wwv_flow_api.id(727704814646725645)
+ p_id=>wwv_flow_api.id(1515011167969246573)
+,p_plugin_id=>wwv_flow_api.id(1514506224199904397)
 ,p_attribute_scope=>'COMPONENT'
 ,p_attribute_sequence=>4
 ,p_display_sequence=>40
@@ -426,8 +443,8 @@ wwv_flow_api.create_plugin_attribute(
 ,p_help_text=>'Additional classes to add to the parent div.'
 );
 wwv_flow_api.create_plugin_attribute(
- p_id=>wwv_flow_api.id(728806152152809334)
-,p_plugin_id=>wwv_flow_api.id(727704814646725645)
+ p_id=>wwv_flow_api.id(1515607561705988086)
+,p_plugin_id=>wwv_flow_api.id(1514506224199904397)
 ,p_attribute_scope=>'COMPONENT'
 ,p_attribute_sequence=>5
 ,p_display_sequence=>50
@@ -440,8 +457,8 @@ wwv_flow_api.create_plugin_attribute(
 ,p_attribute_comment=>'select iso_alpha2 from countries'
 );
 wwv_flow_api.create_plugin_attribute(
- p_id=>wwv_flow_api.id(728212134069230654)
-,p_plugin_id=>wwv_flow_api.id(727704814646725645)
+ p_id=>wwv_flow_api.id(1515013543622409406)
+,p_plugin_id=>wwv_flow_api.id(1514506224199904397)
 ,p_attribute_scope=>'COMPONENT'
 ,p_attribute_sequence=>6
 ,p_display_sequence=>60
@@ -455,8 +472,8 @@ wwv_flow_api.create_plugin_attribute(
 'Requires the utilsScript option.'))
 );
 wwv_flow_api.create_plugin_attribute(
- p_id=>wwv_flow_api.id(728214518339238606)
-,p_plugin_id=>wwv_flow_api.id(727704814646725645)
+ p_id=>wwv_flow_api.id(1515015927892417358)
+,p_plugin_id=>wwv_flow_api.id(1514506224199904397)
 ,p_attribute_scope=>'COMPONENT'
 ,p_attribute_sequence=>8
 ,p_display_sequence=>80
@@ -469,8 +486,8 @@ wwv_flow_api.create_plugin_attribute(
 ||' selection if the input already contains a number.'
 );
 wwv_flow_api.create_plugin_attribute(
- p_id=>wwv_flow_api.id(727108829548630817)
-,p_plugin_id=>wwv_flow_api.id(727704814646725645)
+ p_id=>wwv_flow_api.id(1513910239101809569)
+,p_plugin_id=>wwv_flow_api.id(1514506224199904397)
 ,p_attribute_scope=>'COMPONENT'
 ,p_attribute_sequence=>9
 ,p_display_sequence=>90
@@ -486,14 +503,31 @@ wwv_flow_api.create_plugin_attribute(
 '   callback(countryCode);',
 ' });',
 '}',
-'</code>'))
+'</code>',
+'',
+'or for now geoIP Lookup',
+'',
+'<pre><code>',
+'function(callback) {',
+'   callback("");',
+'}',
+'</code></pre>'))
 ,p_help_text=>wwv_flow_string.join(wwv_flow_t_varchar2(
+'It is recommended that you configure this option at the Component Level and not item by item.<br>',
 'This code overrides the Plugin''s Component attribute for geoIpLookup.',
-'When setting `initialCountry` to "auto", you must use this option to specify a custom function that looks up the user''s location, and then calls the success callback with the relevant country code. Leave empty t avoid the geoIpLookup.'))
+'When setting `initialCountry` to "auto", you must use this option to specify a custom function that looks up the user''s location, and then calls the success callback with the relevant country code. ',
+'',
+'<b>IMPORTANT:</b> You must specify a function for the callback, if you don''t want a geoIpLookup function use something like this:',
+'',
+'<pre><code>',
+'function(callback) {',
+'   callback("");',
+'}',
+'</code></pre>'))
 );
 wwv_flow_api.create_plugin_attribute(
- p_id=>wwv_flow_api.id(728217001315245528)
-,p_plugin_id=>wwv_flow_api.id(727704814646725645)
+ p_id=>wwv_flow_api.id(1515018410868424280)
+,p_plugin_id=>wwv_flow_api.id(1514506224199904397)
 ,p_attribute_scope=>'COMPONENT'
 ,p_attribute_sequence=>10
 ,p_display_sequence=>100
@@ -503,8 +537,8 @@ wwv_flow_api.create_plugin_attribute(
 ,p_is_translatable=>false
 );
 wwv_flow_api.create_plugin_attribute(
- p_id=>wwv_flow_api.id(728218119082247338)
-,p_plugin_id=>wwv_flow_api.id(727704814646725645)
+ p_id=>wwv_flow_api.id(1515019528635426090)
+,p_plugin_id=>wwv_flow_api.id(1514506224199904397)
 ,p_attribute_scope=>'COMPONENT'
 ,p_attribute_sequence=>11
 ,p_display_sequence=>110
@@ -513,15 +547,15 @@ wwv_flow_api.create_plugin_attribute(
 ,p_is_required=>false
 ,p_default_value=>'N'
 ,p_is_translatable=>false
-,p_depending_on_attribute_id=>wwv_flow_api.id(728223011139258560)
+,p_depending_on_attribute_id=>wwv_flow_api.id(1515024420692437312)
 ,p_depending_on_has_to_exist=>true
 ,p_depending_on_condition_type=>'EQUALS'
 ,p_depending_on_expression=>'N'
 ,p_help_text=>'Display the country dial code next to the selected flag so it''s not part of the typed number. Note that this will disable `nationalMode` because technically we are dealing with international numbers, but with the dial code separated.'
 );
 wwv_flow_api.create_plugin_attribute(
- p_id=>wwv_flow_api.id(728809079833837012)
-,p_plugin_id=>wwv_flow_api.id(727704814646725645)
+ p_id=>wwv_flow_api.id(1515610489387015764)
+,p_plugin_id=>wwv_flow_api.id(1514506224199904397)
 ,p_attribute_scope=>'COMPONENT'
 ,p_attribute_sequence=>12
 ,p_display_sequence=>120
@@ -531,8 +565,8 @@ wwv_flow_api.create_plugin_attribute(
 ,p_is_translatable=>false
 );
 wwv_flow_api.create_plugin_attribute(
- p_id=>wwv_flow_api.id(728220511934252119)
-,p_plugin_id=>wwv_flow_api.id(727704814646725645)
+ p_id=>wwv_flow_api.id(1515021921487430871)
+,p_plugin_id=>wwv_flow_api.id(1514506224199904397)
 ,p_attribute_scope=>'COMPONENT'
 ,p_attribute_sequence=>13
 ,p_display_sequence=>130
@@ -558,8 +592,8 @@ wwv_flow_api.create_plugin_attribute(
 '</pre>'))
 );
 wwv_flow_api.create_plugin_attribute(
- p_id=>wwv_flow_api.id(728811943350848320)
-,p_plugin_id=>wwv_flow_api.id(727704814646725645)
+ p_id=>wwv_flow_api.id(1515613352904027072)
+,p_plugin_id=>wwv_flow_api.id(1514506224199904397)
 ,p_attribute_scope=>'COMPONENT'
 ,p_attribute_sequence=>14
 ,p_display_sequence=>140
@@ -571,8 +605,8 @@ wwv_flow_api.create_plugin_attribute(
 ,p_help_text=>'Specify a SQL statement that returns one column called `iso_alpha2`.  This SQL will override the plugin''s global "preferredCountries"'
 );
 wwv_flow_api.create_plugin_attribute(
- p_id=>wwv_flow_api.id(728223011139258560)
-,p_plugin_id=>wwv_flow_api.id(727704814646725645)
+ p_id=>wwv_flow_api.id(1515024420692437312)
+,p_plugin_id=>wwv_flow_api.id(1514506224199904397)
 ,p_attribute_scope=>'COMPONENT'
 ,p_attribute_sequence=>15
 ,p_display_sequence=>150
@@ -935,8 +969,8 @@ end;
 /
 begin
 wwv_flow_api.create_plugin_file(
- p_id=>wwv_flow_api.id(717205342320860326)
-,p_plugin_id=>wwv_flow_api.id(727704814646725645)
+ p_id=>wwv_flow_api.id(1504006751874039078)
+,p_plugin_id=>wwv_flow_api.id(1514506224199904397)
 ,p_file_name=>'intlTelInput.min.js'
 ,p_mime_type=>'application/javascript'
 ,p_file_charset=>'utf-8'
@@ -1289,8 +1323,8 @@ end;
 /
 begin
 wwv_flow_api.create_plugin_file(
- p_id=>wwv_flow_api.id(717205797173860323)
-,p_plugin_id=>wwv_flow_api.id(727704814646725645)
+ p_id=>wwv_flow_api.id(1504007206727039075)
+,p_plugin_id=>wwv_flow_api.id(1514506224199904397)
 ,p_file_name=>'intlTelInput.js.map'
 ,p_mime_type=>'application/json'
 ,p_file_charset=>'utf-8'
@@ -1353,8 +1387,8 @@ end;
 /
 begin
 wwv_flow_api.create_plugin_file(
- p_id=>wwv_flow_api.id(719501900997871012)
-,p_plugin_id=>wwv_flow_api.id(727704814646725645)
+ p_id=>wwv_flow_api.id(1506303310551049764)
+,p_plugin_id=>wwv_flow_api.id(1514506224199904397)
 ,p_file_name=>'sdIntlPhones.js'
 ,p_mime_type=>'application/javascript'
 ,p_file_charset=>'utf-8'
@@ -1392,8 +1426,8 @@ end;
 /
 begin
 wwv_flow_api.create_plugin_file(
- p_id=>wwv_flow_api.id(719503135417863093)
-,p_plugin_id=>wwv_flow_api.id(727704814646725645)
+ p_id=>wwv_flow_api.id(1506304544971041845)
+,p_plugin_id=>wwv_flow_api.id(1514506224199904397)
 ,p_file_name=>'sdIntlPhones.min.js'
 ,p_mime_type=>'application/javascript'
 ,p_file_charset=>'utf-8'
@@ -1433,8 +1467,8 @@ end;
 /
 begin
 wwv_flow_api.create_plugin_file(
- p_id=>wwv_flow_api.id(719503537456863091)
-,p_plugin_id=>wwv_flow_api.id(727704814646725645)
+ p_id=>wwv_flow_api.id(1506304947010041843)
+,p_plugin_id=>wwv_flow_api.id(1514506224199904397)
 ,p_file_name=>'sdIntlPhones.js.map'
 ,p_mime_type=>'application/json'
 ,p_file_charset=>'utf-8'
@@ -1699,8 +1733,8 @@ end;
 /
 begin
 wwv_flow_api.create_plugin_file(
- p_id=>wwv_flow_api.id(727707163934898033)
-,p_plugin_id=>wwv_flow_api.id(727704814646725645)
+ p_id=>wwv_flow_api.id(1514508573488076785)
+,p_plugin_id=>wwv_flow_api.id(1514506224199904397)
 ,p_file_name=>'intlTelInput.css'
 ,p_mime_type=>'text/css'
 ,p_file_charset=>'utf-8'
@@ -2591,8 +2625,8 @@ end;
 /
 begin
 wwv_flow_api.create_plugin_file(
- p_id=>wwv_flow_api.id(727707522403907943)
-,p_plugin_id=>wwv_flow_api.id(727704814646725645)
+ p_id=>wwv_flow_api.id(1514508931957086695)
+,p_plugin_id=>wwv_flow_api.id(1514506224199904397)
 ,p_file_name=>'intlTelInput.js'
 ,p_mime_type=>'application/javascript'
 ,p_file_charset=>'utf-8'
@@ -4355,8 +4389,8 @@ end;
 /
 begin
 wwv_flow_api.create_plugin_file(
- p_id=>wwv_flow_api.id(727708974151727580)
-,p_plugin_id=>wwv_flow_api.id(727704814646725645)
+ p_id=>wwv_flow_api.id(1514510383704906332)
+,p_plugin_id=>wwv_flow_api.id(1514506224199904397)
 ,p_file_name=>'img/flags@2x.png'
 ,p_mime_type=>'image/png'
 ,p_file_charset=>'utf-8'
@@ -6827,8 +6861,8 @@ end;
 /
 begin
 wwv_flow_api.create_plugin_file(
- p_id=>wwv_flow_api.id(727820729535567130)
-,p_plugin_id=>wwv_flow_api.id(727704814646725645)
+ p_id=>wwv_flow_api.id(1514622139088745882)
+,p_plugin_id=>wwv_flow_api.id(1514506224199904397)
 ,p_file_name=>'utils.js'
 ,p_mime_type=>'application/javascript'
 ,p_file_charset=>'utf-8'
