@@ -1,4 +1,4 @@
-procedure intl_phone_number_render
+create or replace procedure intl_phone_number_render
     ( p_item   in            apex_plugin.t_item
     , p_plugin in            apex_plugin.t_plugin
     , p_param  in            apex_plugin.t_item_render_param
@@ -127,12 +127,15 @@ begin
     apex_javascript.add_onload_code(p_code => 
          'var input = document.getElementById("'||p_item.name||'");' || l_crlf
       || p_item.name||'_iti = window.intlTelInput(input,'|| l_js_code || ');' || l_crlf
-      || '$("#'|| p_item.name || '").sdIntrlPhones({' || l_crlf
-      ||      apex_javascript.add_attribute('itemName', p_item.name, true, true) || l_crlf
-      ||      apex_javascript.add_attribute('storageFormat', p_plugin.attribute_02, true, true) || l_crlf
-      ||      apex_javascript.add_attribute('messages', l_messages, false, false) || l_crlf
-      || '});' || l_crlf
+      || p_item.name||'_iti.promise.then(function(){' || l_crlf -- wait for the iti item to be set before setting up the APEX item
+      || '  $("#'|| p_item.name || '").sdIntrlPhones({' || l_crlf
+      ||        apex_javascript.add_attribute('itemName', p_item.name, true, true) || l_crlf
+      ||        apex_javascript.add_attribute('storageFormat', p_plugin.attribute_02, true, true) || l_crlf
+      ||        apex_javascript.add_attribute('messages', l_messages, false, false) || l_crlf
+      || '  });' || l_crlf
+      || '});' -- close iti.promise
     );
+
 
 end intl_phone_number_render;
 /
