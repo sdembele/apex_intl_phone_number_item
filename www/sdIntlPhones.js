@@ -7,7 +7,9 @@ $.widget( "ui.sdIntrlPhones", {
      itemName: '',
      storageFormat: 1,
      messages: null,
-     suffix: '_iti'
+     suffix: '_iti',
+     labelName: '',
+     labelTemplate: 'Optional - Floating'
   },
 
   // Logging for "regular" text elements
@@ -25,18 +27,24 @@ $.widget( "ui.sdIntrlPhones", {
 
   _create: function() {
     var uiw = this;
+    var llabelTemplate = uiw.options.labelTemplate;
 
     // Options are already merged and stored in this.options (or uiw.options)
     uiw.log("_create");
     uiw.log("itemName", uiw.options.itemName);
     uiw.log("suffix", uiw.options.suffix);
     uiw.log("storageFormat", uiw.options.storageFormat);
+    uiw.log("labelName", uiw.options.labelName);
+    uiw.log("labelTemplate", uiw.options.labelTemplate);
 
     uiw._values = {
         itiName:  uiw.options.itemName + uiw.options.suffix,
         messages: JSON.parse(uiw.options.messages)
     };
-
+    // Apply the translate for an floating template
+    if ( llabelTemplate == 'Optional - Floating' || llabelTemplate == 'Required - Floating' ) {
+      document.getElementById(uiw.options.labelName).classList.add('iti__floatingItem');
+    } 
     uiw.log("itiName", uiw._values.itiName);
     uiw.elog("messages", uiw._values.messages);
 

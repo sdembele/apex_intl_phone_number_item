@@ -916,3 +916,6 @@
 
 .iti__flag.iti__np {
   background-color: transparent; }
+
+.iti__floatingItem {
+  transform: translate(0, -20%); }
