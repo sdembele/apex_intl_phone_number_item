@@ -917,5 +917,7 @@
 .iti__flag.iti__np {
   background-color: transparent; }
 
-.iti__floatingItem {
-  transform: translate(0, -20%); }
+.plugin-sd-intl-phone-number .t-Form-labelContainer label {
+  transform: translate(0, -20%);
+}
+  

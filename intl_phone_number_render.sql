@@ -18,7 +18,6 @@ as
     l_preferred_countries     p_item.attribute_01%type := nvl(p_item.attribute_14, p_plugin.attribute_01);
     l_separate_dial_code_flag p_item.attribute_01%type := p_item.attribute_15;
     l_messages                p_item.attribute_01%type := p_plugin.attribute_04; -- for MLS messages
-    l_item_label_template     varchar2(64);
     
     l_crlf              char(2) := chr(13)||chr(10);
 
@@ -122,9 +121,6 @@ begin
 
     l_js_code := replace(l_js_code,'"#geoIpLookup#"',l_geoIpLookup); -- plug this JS code with no escaping
    
-    select item_label_template into l_item_label_template
-    from   apex_application_page_items
-    where  item_id = p_item.id;
     
     apex_debug.error('l_js_code === '||l_js_code);
     
@@ -136,8 +132,6 @@ begin
       ||        apex_javascript.add_attribute('itemName', p_item.name, true, true) || l_crlf
       ||        apex_javascript.add_attribute('storageFormat', p_plugin.attribute_02, true, true) || l_crlf
       ||        apex_javascript.add_attribute('messages', l_messages, true, true) || l_crlf
-      ||        apex_javascript.add_attribute('labelName', p_item_label, true, true) || l_crlf
-      ||        apex_javascript.add_attribute('labelTemplate', l_item_label_template, false, false) || l_crlf
       || '  });' || l_crlf
       || '});' -- close iti.promise
     );
